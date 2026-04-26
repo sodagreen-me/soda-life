@@ -1,0 +1,147 @@
+[
+  {
+    "id": "birth-1982",
+    "title": "出生",
+    "scene": "home",
+    "year": 1982,
+    "age": 0,
+    "mode": "speedrun",
+    "text": "你出生在台北，一个普通的家庭里。\n\n窗外是台北湿热的夏天，你发出了第一声啼哭。",
+    "choices": [
+      { "text": "继续", "nextEvent": "piano-1988" }
+    ]
+  },
+  {
+    "id": "piano-1988",
+    "title": "姐姐的钢琴",
+    "scene": "home",
+    "year": 1988,
+    "age": 6,
+    "mode": "speedrun",
+    "text": "你六岁了。家里并不富裕，但姐姐在学钢琴，每次听到琴声，你都会停下手中的事，安静地听。\n\n那些黑白键好像在说一种你似懂非懂的语言。\n\n有一天，家里只剩你一个人，琴盖没有合上。",
+    "choices": [
+      { "text": "找母亲，说自己也想学", "nextEvent": "piano-1988-rejected" },
+      { "text": "趁没人的时候偷偷弹", "nextEvent": "piano-1988-secret" },
+      { "text": "不感兴趣，走开了", "nextEvent": "piano-1988-ignore" }
+    ]
+  },
+  {
+    "id": "piano-1988-rejected",
+    "title": "母亲的为难",
+    "scene": "home",
+    "year": 1988,
+    "age": 6,
+    "mode": "speedrun",
+    "text": "你鼓起勇气，跑到母亲面前说：「妈，我也想学钢琴。」\n\n母亲沉默了一会儿，叹了口气：「家里只能供姐姐一个人学……乖，等你长大再说。」\n\n你看着地板，没有再说话。但那架钢琴的琴盖，在你心里始终没有合上。",
+    "choices": [
+      { "text": "趁没人的时候偷偷弹", "nextEvent": "piano-1988-secret" },
+      { "text": "算了，不弹了", "nextEvent": "piano-1988-ignore" }
+    ]
+  },
+  {
+    "id": "piano-1988-secret",
+    "title": "被夹到手的发现",
+    "scene": "home",
+    "year": 1988,
+    "age": 6,
+    "mode": "speedrun",
+    "text": "你悄悄走到钢琴前，小心翼翼地按下一个键——声音比想象中更亮、更好听。\n\n你兴奋地又按了一个，想够到更高音的键，手指一滑——琴盖猛地落下来，夹住了你的手。\n\n「啊——！」\n\n你痛得大叫起来。但就在那一声喊叫里，你第一次听到了自己的声音——清亮、高亢，像某种从未被发现的东西。\n\n母亲从厨房跑出来，一边帮你揉手，一边愣住了。\n\n「你嗓子……还真好听。」",
+    "choices": [
+      {
+        "text": "继续",
+        "nextEvent": "faye-1995",
+        "effects": {
+          "setFlags": { "music_awakening": true },
+          "probabilityModifiers": { "music_event": 2.0 }
+        }
+      }
+    ]
+  },
+  {
+    "id": "piano-1988-ignore",
+    "title": "那架钢琴",
+    "scene": "home",
+    "year": 1988,
+    "age": 6,
+    "mode": "speedrun",
+    "text": "你没有靠近那架钢琴。\n\n琴声从隔壁房间传来，你在外面玩着别的东西。也许以后会有机会，也许不会。\n\n你的人生，和那架钢琴擦肩而过了。",
+    "choices": [
+      {
+        "text": "继续",
+        "nextEvent": "faye-1995",
+        "effects": {
+          "setFlags": { "music_awakening": false },
+          "probabilityModifiers": { "music_event": 0.3 }
+        }
+      }
+    ]
+  },
+  {
+    "id": "faye-1995",
+    "title": "王菲的天空",
+    "scene": "home",
+    "year": 1995,
+    "age": 13,
+    "mode": "speedrun",
+    "text": "你十三岁了。姐姐在国二那年，送了你一张专辑——王菲的《天空》。\n\n你把唱片放进播放器，戴上耳机。\n\n「我们的天空，在什么时候变得那么高……」\n\n那个声音空灵又自由，像是从另一个世界飘来的。你从来不知道，人的声音可以做到这种事情。",
+    "choices": [
+      {
+        "text": "反复播放，单曲循环",
+        "nextEvent": "faye-1995-love",
+        "effects": { "probabilityModifiers": { "music_event": 2.0 } }
+      },
+      {
+        "text": "听了一遍，觉得还行",
+        "nextEvent": "faye-1995-neutral",
+        "effects": { "probabilityModifiers": { "music_event": 0.8 } }
+      },
+      {
+        "text": "不怎么喜欢",
+        "nextEvent": "faye-1995-dislike",
+        "effects": { "probabilityModifiers": { "music_event": 0.3 } }
+      }
+    ]
+  },
+  {
+    "id": "faye-1995-love",
+    "title": "循环播放",
+    "scene": "home",
+    "year": 1995,
+    "age": 13,
+    "mode": "speedrun",
+    "text": "你把《天空》翻来覆去地听，每天不下十遍。\n\n王菲的声音在你的脑海里扎了根。你开始留意每一首歌的旋律、歌词、气息——你第一次意识到，音乐不只是一些好听的声音，它可以是整个人。\n\n你不知道的是，这张专辑将会改变你的一生。",
+    "choices": [
+      {
+        "text": "继续",
+        "effects": {
+          "setFlags": { "music_passion": true },
+          "probabilityModifiers": { "music_event": 2.0 }
+        }
+      }
+    ]
+  },
+  {
+    "id": "faye-1995-neutral",
+    "title": "还行吧",
+    "scene": "home",
+    "year": 1995,
+    "age": 13,
+    "mode": "speedrun",
+    "text": "你把专辑听完了。声音确实不错，但也就那样吧。\n\n你把它放回了书架上，偶尔想起来的时候会再听一次。",
+    "choices": [
+      { "text": "继续" }
+    ]
+  },
+  {
+    "id": "faye-1995-dislike",
+    "title": "不是我的菜",
+    "scene": "home",
+    "year": 1995,
+    "age": 13,
+    "mode": "speedrun",
+    "text": "你听了几首就摘下了耳机。\n\n这种音乐不是你喜欢的类型。你把专辑还给了姐姐。\n\n「不喜欢啊？」姐姐有些失望。\n\n「嗯……不是我的东西。」",
+    "choices": [
+      { "text": "继续" }
+    ]
+  }
+]

@@ -1,0 +1,18 @@
+# 关于本站 project
+dist
+package-lock.json
+pnpm-lock.yaml
+
+# Editor directories and files
+.vscode
+.vs
+.idea
+.DS_Store
+
+# node_modules
+node_modules
+*/node_modules/
+.temp
+.cache
+.astro
+

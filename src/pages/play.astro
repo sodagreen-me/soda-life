@@ -1,0 +1,107 @@
+---
+import Game from '../layouts/Game.astro';
+import scenarioData from '../data/scenarios/wu-qingfeng.json';
+import eventsRaw from '../data/events/wu-qingfeng.json';
+
+const eventsData = eventsRaw;
+const startEvent = scenarioData.startEvent;
+---
+
+<Game title="苏打人生 - 游戏中">
+  <main class="flex flex-col h-dvh">
+    <div class="flex-shrink-0 flex justify-end p-4 bg-gradient-to-b from-[#16213e] to-[#1a1a2e] min-h-[30vh] max-h-[40vh]">
+      <span id="year-badge" class="font-['Press_Start_2P'] text-[0.55rem] tracking-wider px-3 py-1.5 border border-[#16c79a] text-[#16c79a] bg-[#16c79a]/10"></span>
+    </div>
+
+    <div class="flex-1 min-h-0 bg-black/70 border-t-2 border-[#16c79a] px-5 py-5 overflow-y-auto md:overflow-y-auto">
+      <h2 id="event-title" class="text-[#16c79a] text-lg md:text-xl font-bold mb-3 tracking-wider"></h2>
+      <div id="event-text" class="text-[#c0c0c0] leading-relaxed text-base md:text-[0.95rem]"></div>
+    </div>
+
+    <div id="choices-area" class="flex-shrink-0 bg-black/50 border-t border-[#333] px-5 py-4 flex flex-col gap-2.5 max-h-[40vh] overflow-y-auto"></div>
+  </main>
+  <script define:vars={{ eventsData, startEvent }}>
+    window.__SODA_DATA__ = { eventsData, startEvent };
+  </script>
+</Game>
+
+<script>
+  import { createInitialState } from '../scripts/state';
+  import { setEvents, getEvent, processChoice } from '../scripts/engine';
+
+  const { eventsData, startEvent } = (window as any).__SODA_DATA__;
+
+  function mdToHtml(md: string) {
+    return md
+      .split('\n\n')
+      .map((p) => p.trim())
+      .filter(Boolean)
+      .map((p) => '<p>' + p.replace(/\n/g, '<br>') + '</p>')
+      .join('');
+  }
+
+  setEvents(
+    Object.fromEntries(
+      eventsData.map((e: any) => [e.id, { ...e, text: mdToHtml(e.text || e.body || '') }])
+    )
+  );
+
+  let state = createInitialState('wu-qingfeng', startEvent);
+
+  function renderEvent() {
+    const event = getEvent(state.currentEvent);
+    if (!event) {
+      renderEnding();
+      return;
+    }
+
+    document.getElementById('year-badge')!.textContent =
+      event.year + ' 年 · ' + event.age + ' 岁';
+    document.getElementById('event-title')!.textContent = event.title;
+    document.getElementById('event-text')!.innerHTML = event.text;
+
+    const choicesArea = document.getElementById('choices-area')!;
+    choicesArea.innerHTML = '';
+
+    event.choices.forEach((choice: any, index: number) => {
+      const btn = document.createElement('button');
+      btn.className =
+        'w-full text-left px-4 py-3 md:px-6 md:py-3 text-base md:text-[0.95rem] ' +
+        'border border-[#555] text-[#e0e0e0] bg-transparent ' +
+        'transition-all duration-200 cursor-pointer ' +
+        'hover:border-[#16c79a] hover:text-[#16c79a] hover:bg-[#16c79a]/5 ' +
+        'active:bg-[#16c79a]/10 font-["Noto_Sans_SC"]';
+      btn.textContent = choice.text;
+      btn.addEventListener('click', () => {
+        state = processChoice(state, index);
+        renderEvent();
+      });
+      choicesArea.appendChild(btn);
+    });
+  }
+
+  function renderEnding() {
+    document.getElementById('year-badge')!.textContent = '';
+    document.getElementById('event-title')!.textContent = '未完待续……';
+    document.getElementById('event-text')!.innerHTML =
+      '<p>人生还在继续，故事尚未写完。</p><p>（Demo 结束，敬请期待后续剧情）</p>';
+
+    const choicesArea = document.getElementById('choices-area')!;
+    choicesArea.innerHTML = '';
+
+    const btn = document.createElement('button');
+    btn.className =
+      'w-full text-left px-4 py-3 text-base ' +
+      'border border-[#555] text-[#e0e0e0] bg-transparent ' +
+      'transition-all duration-200 cursor-pointer ' +
+      'hover:border-[#16c79a] hover:text-[#16c79a] hover:bg-[#16c79a]/5 ' +
+      'font-["Noto_Sans_SC"]';
+    btn.textContent = '回到首页';
+    btn.addEventListener('click', () => {
+      window.location.href = '/';
+    });
+    choicesArea.appendChild(btn);
+  }
+
+  renderEvent();
+</script>
